@@ -13,24 +13,15 @@ namespace ChatApp.Hubs
             _userConnectionManager = userConnectionManager;
         }
 
-        public override async Task OnConnectedAsync()
+        public async Task ConnectUser(string userName)
         {
-            string userName = Context.GetHttpContext().Request.Query["userName"];
             string userId = Context.ConnectionId;
 
-            Console.WriteLine($"Povezan korisnik: {userName}, ConnectionId: {userId}");
-
-            if (!string.IsNullOrEmpty(userName))
+            if (_userConnectionManager.AddUser(userId, userName))
             {
-                _userConnectionManager.AddUser(userId, userName);
-
-                // Pošaljite novu listu svih aktivnih korisnika svakom klijentu
                 var allUsers = _userConnectionManager.GetAllUsers();
-                Console.WriteLine("Slanje korisnika klijentima: " + string.Join(", ", allUsers));
-                await Clients.All.SendAsync("UserListUpdated", allUsers);
+                await Clients.All.SendAsync("UserConnected", userName, allUsers);
             }
-
-            await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)

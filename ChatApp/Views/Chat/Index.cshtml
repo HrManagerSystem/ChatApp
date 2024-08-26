@@ -8,7 +8,7 @@
 <div class="container" style="border:1px solid silver; height: 82dvh">
     <div class="row h-f">
         <div class="col-4" style="border-right: 1px solid silver; padding: 0">
-            <h3 style="margin-left: 5px;">Online</h3>
+            <h3 id="heading" style="margin-left: 5px;">Online</h3>
             <ul class="list-group" id="list-users">
             </ul>
         </div>
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="row" style="display: flex; align-items: center; padding: 15px;">
+            <div class="row" style="display: flex; align-items: center; padding: 12px;">
                 <div class="col-10">
                     <input type="text" class="form-control" style="width: 100%;" placeholder="Type message"/>
                 </div>
@@ -43,6 +43,21 @@
 
 <script src="./js/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="./js/chat.js"></script>
+
+<script>
+    const userListElement = document.getElementById("list-users");
+    const userList = JSON.parse(sessionStorage.getItem('users') ?? '[]');
+    const current = sessionStorage.getItem('currentUser');
+
+    if (userListElement) {
+        userList.forEach(function (user) {
+                const li = `<li class="list-group-item" data-bs-toggle="tooltip" data-bs-placement="right"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="Chat with ${user}">${user}<br /> <span class="active-user">• ACTIVE</span></li>`;
+                userListElement.innerHTML += li;
+        });
+    }
+</script>
 
 
 <style>

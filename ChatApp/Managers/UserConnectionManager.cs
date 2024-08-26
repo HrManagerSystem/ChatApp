@@ -4,7 +4,7 @@ namespace ChatApp.Managers
 {
     public class UserConnectionManager
     {
-        private readonly ConcurrentDictionary<string, string> _activeUsers = new ConcurrentDictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, string> _activeUsers = new ConcurrentDictionary<string, string>();
 
         public bool AddUser(string connectionId, string userName)
         {
