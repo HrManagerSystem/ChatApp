@@ -20,5 +20,10 @@ namespace ChatApp.Managers
         {
             return _activeUsers.Values.ToList();
         }
+
+        public string GetByUserName(string username)
+        {
+            return _activeUsers.Where(x => x.Value == username).FirstOrDefault().Value;
+        }
     }
 }

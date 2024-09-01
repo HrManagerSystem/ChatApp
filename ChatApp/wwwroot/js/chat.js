@@ -26,9 +26,18 @@ connection.on("UserConnected", function (userName, userList) {
     console.log(userList);
 });
 
+connection.on("MessageReceive", function (userName, message) {
+    console.log(`${userName} said ${message}`);
+});
+
 connection.on("UserDisconnected", function (userName, userList) {
     updateActiveUsers(userList, userName);
 });
+
+function sendMessage() {
+    let userMessage = document.getElementById("txtMessage").value;
+    let currentUser = sessionStorage.getItem("currentUser");
+}
 
 function updateActiveUsers(userList, userName) {
     sessionStorage.setItem("users", JSON.stringify(userList));

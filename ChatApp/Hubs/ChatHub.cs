@@ -24,6 +24,13 @@ namespace ChatApp.Hubs
             }
         }
 
+        public async Task SendMessage(string userName, string message, string toUser)
+        {
+            string toUserId = _userConnectionManager.GetByUserName(toUser);
+
+            await Clients.Client(toUserId).SendAsync("MessageReceive", userName, message);
+        }
+
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             string userId = Context.ConnectionId;
